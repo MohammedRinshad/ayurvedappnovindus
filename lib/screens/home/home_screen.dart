@@ -8,6 +8,7 @@ import '../../utils/colors.dart';
 import '../../widgets/date_picker_controller.dart';
 import '../../widgets/login_button_widget.dart';
 import '../../widgets/search_button.dart';
+import "package:novinduscalicutinterview/screens/home/model/booking_class_model.dart";
 
 class HomeScreen extends StatelessWidget {
   static const route = "homescreen";
@@ -100,16 +101,14 @@ class HomeScreen extends StatelessWidget {
               ),
               const Divider(color: Colors.grey),
               Expanded(
-                // Make the ListView expandable to take available space
                 child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 5), // Space at top and bottom
-                  itemCount: 5,
+                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
+                  itemCount: bookings.length,
                   itemBuilder: (context, index) {
+                    final booking = bookings[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 5), // Space between each container
+                          vertical: 8.0, horizontal: 5),
                       child: Container(
                         height: 150,
                         width: MediaQuery.of(context).size.width * (340 / 375),
@@ -124,11 +123,11 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               const SizedBox(height: 10),
                               Text(
-                                "1. Vikram Singh",
+                                "${index + 1}. ${booking.name}",
                                 style: ts20mcBlack,
                               ),
                               Text(
-                                "Couple Combo package(Rejuven satr)",
+                                booking.package,
                                 style: ts18mcgreen,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -140,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                                       color: Color(0xffF24E1E)),
                                   const SizedBox(width: 10),
                                   Text(
-                                    "21/10/2023",
+                                    booking.date,
                                     style: ts18mcgrey,
                                   ),
                                   const SizedBox(width: 20),
@@ -148,23 +147,18 @@ class HomeScreen extends StatelessWidget {
                                       color: Color(0xffF24E1E)),
                                   const SizedBox(width: 10),
                                   Text(
-                                    "Manesh",
+                                    booking.personName,
                                     style: ts18mcgrey,
                                   ),
                                 ],
                               ),
-                              const Divider(
-                                color: Colors.black,
-                                thickness: 1,
-                              ),
+                              const Divider(color: Colors.black, thickness: 1),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "View Booking Details",
-                                    style: ts16mcBlack,
-                                  ),
+                                  Text("View Booking Details",
+                                      style: ts16mcBlack),
                                   const Icon(
                                     Icons.keyboard_arrow_down_outlined,
                                     color: Color(0xff006837),
@@ -180,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 20), // Space before the button
+              const SizedBox(height: 20),
               LoginButtonWidget(
                 color: const Color(0xff006837),
                 press: () {
