@@ -5,8 +5,8 @@ import 'package:novinduscalicutinterview/utils/styles.dart';
 import 'package:novinduscalicutinterview/widgets/login_button_widget.dart';
 import 'package:novinduscalicutinterview/widgets/text_form_field.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/treatment_count_provider.dart';
+import '../receipt/receipt_print.dart';
 
 class RegisterScreen extends StatelessWidget {
   static const route = '/register';
@@ -16,6 +16,10 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController whatsController = TextEditingController();
   TextEditingController branchController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController totalAmountController = TextEditingController();
+  TextEditingController discountController = TextEditingController();
+  TextEditingController advanceController = TextEditingController();
+  TextEditingController balanceController = TextEditingController();
   TextEditingController maleController = TextEditingController();
   TextEditingController femaleController = TextEditingController();
   @override
@@ -107,7 +111,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
+                  controller: addressController,
                   hintText: "Enter your address",
                   width: MediaQuery.of(context).size.width * (350 / 375),
                   height: MediaQuery.of(context).size.height * (50 / 800),
@@ -123,7 +127,6 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
                   suffixIcon: const Icon(
                     Icons.keyboard_arrow_down_outlined,
                     color: Color(0xff006837),
@@ -144,7 +147,6 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
                   suffixIcon: const Icon(
                     Icons.keyboard_arrow_down_outlined,
                     color: Color(0xff006837),
@@ -270,7 +272,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
+                  controller: totalAmountController,
                   width: MediaQuery.of(context).size.width * (350 / 375),
                   height: MediaQuery.of(context).size.height * (50 / 800),
                 ),
@@ -285,7 +287,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
+                  controller: discountController,
                   width: MediaQuery.of(context).size.width * (350 / 375),
                   height: MediaQuery.of(context).size.height * (50 / 800),
                 ),
@@ -363,7 +365,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
+                  controller: advanceController,
                   width: MediaQuery.of(context).size.width * (350 / 375),
                   height: MediaQuery.of(context).size.height * (50 / 800),
                 ),
@@ -378,7 +380,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
+                  controller: balanceController,
                   width: MediaQuery.of(context).size.width * (350 / 375),
                   height: MediaQuery.of(context).size.height * (50 / 800),
                 ),
@@ -393,7 +395,6 @@ class RegisterScreen extends StatelessWidget {
                   height: 5,
                 ),
                 TextFormFieldWidget(
-                  controller: nameController,
                   suffixIcon: const Icon(
                     Icons.calendar_month,
                     color: Color(0xff006837),
@@ -442,7 +443,9 @@ class RegisterScreen extends StatelessWidget {
                   height: 10,
                 ),
                 LoginButtonWidget(
-                    press: () {},
+                    press: () {
+                      Navigator.pushNamed(context,ReceiptPrintScreen.route);
+                    },
                     color: const Color(0xff006837),
                     title: 'Save'),
                 const SizedBox(
@@ -567,16 +570,25 @@ class RegisterScreen extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * (40 / 800),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff006837),
-                        ),
-                        child: const Icon(
-                          Icons.remove,
-                          color: colorF1F1F1,
-                        ),
+                      Consumer<CounterProvider>(
+                        builder: (context,femaleCount,_) {
+                          return InkWell(
+                            onTap: (){
+                              femaleCount.decrement();
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * (40 / 800),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xff006837),
+                              ),
+                              child: const Icon(
+                                Icons.remove,
+                                color: colorF1F1F1,
+                              ),
+                            ),
+                          );
+                        }
                       ),
                       const SizedBox(
                         width: 10,

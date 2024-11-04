@@ -16,6 +16,7 @@ TextStyle get ts16mcBlack => GoogleFonts.poppins(
     color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500);
 TextStyle get ts14mcBlack => GoogleFonts.poppins(
     color: Colors.black, fontSize: 14, fontWeight: FontWeight.w400);
+
     TextStyle get ts12mcBlack => GoogleFonts.poppins(
     color: Colors.black, fontSize: 12, fontWeight: FontWeight.w400);
 TextStyle get ts14bWhite => GoogleFonts.poppins(
@@ -36,5 +37,13 @@ TextStyle get ts18mcgreen => GoogleFonts.poppins(
 
 TextStyle get ts18mcgrey => GoogleFonts.poppins(
     color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w500);
-    TextStyle get ts16mcgreen => GoogleFonts.poppins(
+TextStyle get ts16mcgreen => GoogleFonts.poppins(
     color: const Color(0xff006837), fontSize: 16, fontWeight: FontWeight.w400);
+TextStyle get ts10mcgrey => GoogleFonts.poppins(
+    color: Colors.grey, fontSize: 10, fontWeight: FontWeight.w300);
+TextStyle get ts14cgrey => GoogleFonts.poppins(
+    color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w400);
+TextStyle get ts14cgreybold => GoogleFonts.poppins(
+    color: Colors.grey, fontSize: 14, fontWeight: FontWeight.w700);
+TextStyle get ts20mcgreen => GoogleFonts.poppins(
+    color: const Color(0xff006837), fontSize: 20, fontWeight: FontWeight.w400);
