@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:novinduscalicutinterview/providers/radio_button_provider.dart';
+import 'package:novinduscalicutinterview/screens/register/provider/form_provider.dart';
+import 'package:novinduscalicutinterview/screens/register/widget/payment_radio.dart';
 import 'package:novinduscalicutinterview/utils/colors.dart';
 import 'package:novinduscalicutinterview/utils/styles.dart';
 import 'package:novinduscalicutinterview/widgets/login_button_widget.dart';
 import 'package:novinduscalicutinterview/widgets/text_form_field.dart';
 import 'package:provider/provider.dart';
+import '../../providers/location_provider.dart';
 import '../../providers/treatment_count_provider.dart';
+import '../../widgets/bottom_bar_widget.dart';
+import '../../widgets/drop_down_widget.dart';
 import '../receipt/receipt_print.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -24,6 +28,11 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController femaleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final branchOptions = ['Branch A', 'Branch B', 'Branch C'];
+    final locationOptions = ['New York', 'Los Angeles', 'Chicago'];
+    final hourOptions = ['1 hour', '2 hour', '3 hour'];
+    final minuteOptions = ['1 Minute', '2 Minute', '3 Minute'];
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -33,129 +42,75 @@ class RegisterScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 25),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5, right: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Icon(Icons.arrow_back_outlined, size: 25),
-                      Stack(
-                        children: [
-                          Container(
-                            height: 25,
-                            width: 25,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("assets/Vector.png"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: Container(
-                              height: 10,
-                              width: 10,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                const BottomAppBarWidget(),
                 const SizedBox(
                   height: 20,
                 ),
-                Text(
-                  "Name",
-                  style: ts16mcBlack,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextFormFieldWidget(
-                  controller: nameController,
-                  hintText: "Enter your full name",
-                  width: MediaQuery.of(context).size.width * (350 / 375),
-                  height: MediaQuery.of(context).size.height * (50 / 800),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Whatsapp number",
-                  style: ts16mcBlack,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextFormFieldWidget(
-                  controller: whatsController,
-                  hintText: "Enter your whatsapp number",
-                  width: MediaQuery.of(context).size.width * (350 / 375),
-                  height: MediaQuery.of(context).size.height * (50 / 800),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Address",
-                  style: ts16mcBlack,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextFormFieldWidget(
-                  controller: addressController,
-                  hintText: "Enter your address",
-                  width: MediaQuery.of(context).size.width * (350 / 375),
-                  height: MediaQuery.of(context).size.height * (50 / 800),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Location",
-                  style: ts16mcBlack,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextFormFieldWidget(
-                  suffixIcon: const Icon(
-                    Icons.keyboard_arrow_down_outlined,
-                    color: Color(0xff006837),
-                    size: 30,
-                  ),
-                  hintText: "Enter your Location",
-                  width: MediaQuery.of(context).size.width * (350 / 375),
-                  height: MediaQuery.of(context).size.height * (50 / 800),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Branch",
-                  style: ts16mcBlack,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextFormFieldWidget(
-                  suffixIcon: const Icon(
-                    Icons.keyboard_arrow_down_outlined,
-                    color: Color(0xff006837),
-                    size: 30,
-                  ),
-                  hintText: "Choose your branch",
-                  width: MediaQuery.of(context).size.width * (350 / 375),
-                  height: MediaQuery.of(context).size.height * (50 / 800),
-                ),
+                Text("Name", style: ts16mcBlack),
+                const SizedBox(height: 5),
+                Consumer<FormProvider>(builder: (context, name, _) {
+                  return TextFormFieldWidget(
+                    width: MediaQuery.of(context).size.width * (350 / 375),
+                    height: MediaQuery.of(context).size.height * (50 / 800),
+                    controller: name.nameController,
+                    onChanged: name.updateName,
+                    hintText: "Enter your full name",
+                  );
+                }),
+                const SizedBox(height: 10),
+                Text("Whatsapp number", style: ts16mcBlack),
+                const SizedBox(height: 5),
+                Consumer<FormProvider>(builder: (context, whatsapp, _) {
+                  return TextFormFieldWidget(
+                    width: MediaQuery.of(context).size.width * (350 / 375),
+                    height: MediaQuery.of(context).size.height * (50 / 800),
+                    controller: whatsapp.whatsController,
+                    onChanged: whatsapp.updateWhatsApp,
+                    hintText: "Enter your Whatsapp number ",
+                  );
+                }),
+                const SizedBox(height: 10),
+                Text("Address", style: ts16mcBlack),
+                const SizedBox(height: 5),
+                Consumer<FormProvider>(builder: (context, address, _) {
+                  return TextFormFieldWidget(
+                    width: MediaQuery.of(context).size.width * (350 / 375),
+                    height: MediaQuery.of(context).size.height * (50 / 800),
+                    controller: address.addressController,
+                    onChanged: address.updateAddress,
+                    hintText: "Enter your address",
+                  );
+                }),
+                const SizedBox(height: 10),
+                Text("Location", style: ts16mcBlack),
+                const SizedBox(height: 5),
+                Consumer<DropdownProvider>(builder: (context, locationProv, _) {
+                  return CustomDropdownWidget(
+                    hintText: 'Enter your location',
+                    items: locationOptions,
+                    selectedValue: locationProv.selectedLocation,
+                    onChanged: (newValue) {
+                      if (newValue != null) {
+                        locationProv.setLocation(newValue);
+                      }
+                    },
+                  );
+                }),
+                const SizedBox(height: 10),
+                Text("Branch", style: ts16mcBlack),
+                const SizedBox(height: 5),
+                Consumer<DropdownProvider>(builder: (context, branch, _) {
+                  return CustomDropdownWidget(
+                    hintText: 'Enter your Branch',
+                    items: branchOptions,
+                    selectedValue: branch.selectedBranch,
+                    onChanged: (newValue) {
+                      if (newValue != null) {
+                        branch.setBranch(newValue);
+                      }
+                    },
+                  );
+                }),
                 const SizedBox(
                   height: 10,
                 ),
@@ -221,6 +176,7 @@ class RegisterScreen extends StatelessWidget {
                             height:
                                 MediaQuery.of(context).size.height * (25 / 800),
                             controller: maleController,
+                            keyboardType: TextInputType.number,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
@@ -238,6 +194,7 @@ class RegisterScreen extends StatelessWidget {
                             height:
                                 MediaQuery.of(context).size.height * (25 / 800),
                             controller: femaleController,
+                            keyboardType: TextInputType.number,
                           ),
                           const SizedBox(
                             width: 10,
@@ -298,62 +255,7 @@ class RegisterScreen extends StatelessWidget {
                   "Payment option",
                   style: ts14mcBlack,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Consumer<PaymentProvider>(
-                      builder: (context, payProvider, _) {
-                        return Row(
-                          children: [
-                            Radio<String>(
-                              value: 'Cash',
-                              groupValue: payProvider.selectedPayment,
-                              activeColor: Colors.green,
-                              onChanged: (value) {
-                                payProvider.setPayment(value!);
-                              },
-                            ),
-                            const Text('Cash'),
-                          ],
-                        );
-                      },
-                    ),
-                    Consumer<PaymentProvider>(
-                      builder: (context, payProvider, _) {
-                        return Row(
-                          children: [
-                            Radio<String>(
-                              value: 'Card',
-                              groupValue: payProvider.selectedPayment,
-                              activeColor: Colors.green,
-                              onChanged: (value) {
-                                payProvider.setPayment(value!);
-                              },
-                            ),
-                            const Text('Card'),
-                          ],
-                        );
-                      },
-                    ),
-                    Consumer<PaymentProvider>(
-                      builder: (context, payProvider, _) {
-                        return Row(
-                          children: [
-                            Radio<String>(
-                              value: 'UPI',
-                              groupValue: payProvider.selectedPayment,
-                              activeColor: Colors.green,
-                              onChanged: (value) {
-                                payProvider.setPayment(value!);
-                              },
-                            ),
-                            const Text('UPI'),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                const PaymentRadioButton(),
                 const SizedBox(
                   height: 5,
                 ),
@@ -414,29 +316,37 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    TextFormFieldWidget(
-                      suffixIcon: const Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        color: Color(0xff006837),
-                        size: 30,
-                      ),
-                      width: MediaQuery.of(context).size.width * (155 / 375),
-                      height: MediaQuery.of(context).size.height * (50 / 800),
-                      hintText: 'Hour',
-                    ),
+                    Consumer<DropdownProvider>(builder: (context, hour, _) {
+                      return CustomDropdownWidget(
+                        width: MediaQuery.of(context).size.width * (160 / 375),
+                        height: MediaQuery.of(context).size.height * (60 / 800),
+                        hintText: 'Hour',
+                        items: hourOptions,
+                        selectedValue: hour.selectedHour,
+                        onChanged: (newValue) {
+                          if (newValue != null) {
+                            hour.setHour(newValue);
+                          }
+                        },
+                      );
+                    }),
                     const SizedBox(
                       width: 20,
                     ),
-                    TextFormFieldWidget(
-                      suffixIcon: const Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        color: Color(0xff006837),
-                        size: 30,
-                      ),
-                      width: MediaQuery.of(context).size.width * (155 / 375),
-                      height: MediaQuery.of(context).size.height * (50 / 800),
-                      hintText: 'Minute',
-                    ),
+                    Consumer<DropdownProvider>(builder: (context, minute, _) {
+                      return CustomDropdownWidget(
+                        width: MediaQuery.of(context).size.width * (160 / 375),
+                        height: MediaQuery.of(context).size.height * (60 / 800),
+                        hintText: 'Minute',
+                        items: minuteOptions,
+                        selectedValue: minute.selectedMinute,
+                        onChanged: (newValue) {
+                          if (newValue != null) {
+                            minute.setMinute(newValue);
+                          }
+                        },
+                      );
+                    }),
                   ],
                 ),
                 const SizedBox(
@@ -444,7 +354,7 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 LoginButtonWidget(
                     press: () {
-                      Navigator.pushNamed(context,ReceiptPrintScreen.route);
+                      Navigator.pushNamed(context, ReceiptPrintScreen.route);
                     },
                     color: const Color(0xff006837),
                     title: 'Save'),
@@ -512,7 +422,7 @@ class RegisterScreen extends StatelessWidget {
                             builder: (context, maleCount, _) {
                           return InkWell(
                             onTap: () {
-                              maleCount.decrement();
+                              maleCount.decrementMale();
                             },
                             child: const Icon(
                               Icons.remove,
@@ -527,7 +437,7 @@ class RegisterScreen extends StatelessWidget {
                       Consumer<CounterProvider>(builder: (context, counter, _) {
                         return TextFormFieldWidget(
                           controller: TextEditingController(
-                              text: counter.count.toString()),
+                              text: counter.maleCount.toString()),
                           width: MediaQuery.of(context).size.width * (50 / 375),
                           height:
                               MediaQuery.of(context).size.height * (40 / 800),
@@ -547,7 +457,7 @@ class RegisterScreen extends StatelessWidget {
                               builder: (context, maleCounter, _) {
                             return InkWell(
                               onTap: () {
-                                maleCounter.increment();
+                                maleCounter.incrementMale();
                               },
                               child: const Icon(
                                 Icons.add,
@@ -563,6 +473,7 @@ class RegisterScreen extends StatelessWidget {
                   Row(
                     children: [
                       TextFormFieldWidget(
+                        controller: femaleCountController,
                         width: MediaQuery.of(context).size.width * (125 / 375),
                         height: MediaQuery.of(context).size.height * (40 / 800),
                         hintText: 'Female',
@@ -571,46 +482,62 @@ class RegisterScreen extends StatelessWidget {
                         width: 10,
                       ),
                       Consumer<CounterProvider>(
-                        builder: (context,femaleCount,_) {
-                          return InkWell(
-                            onTap: (){
-                              femaleCount.decrement();
-                            },
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * (40 / 800),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xff006837),
-                              ),
-                              child: const Icon(
-                                Icons.remove,
-                                color: colorF1F1F1,
-                              ),
+                          builder: (context, femaleCount, _) {
+                        return InkWell(
+                          onTap: () {
+                            femaleCount.decrementFemale();
+                          },
+                          child: Container(
+                            height:
+                                MediaQuery.of(context).size.height * (40 / 800),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xff006837),
                             ),
-                          );
-                        }
-                      ),
+                            child: const Icon(
+                              Icons.remove,
+                              color: colorF1F1F1,
+                            ),
+                          ),
+                        );
+                      }),
                       const SizedBox(
                         width: 10,
                       ),
-                      TextFormFieldWidget(
-                        width: MediaQuery.of(context).size.width * (50 / 375),
-                        height: MediaQuery.of(context).size.height * (40 / 800),
-                      ),
+                      Consumer<CounterProvider>(
+                          builder: (context, femaleCount, _) {
+                        return TextFormFieldWidget(
+                          controller: TextEditingController(
+                            text: femaleCount.femaleCount.toString(),
+                          ),
+                          width: MediaQuery.of(context).size.width * (50 / 375),
+                          height:
+                              MediaQuery.of(context).size.height * (40 / 800),
+                        );
+                      }),
                       const SizedBox(
                         width: 10,
                       ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * (50 / 800),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff006837),
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: colorF1F1F1,
-                        ),
-                      )
+                      Consumer<CounterProvider>(
+                          builder: (context, countAdd, _) {
+                        return InkWell(
+                          onTap: () {
+                            countAdd.incrementFemale();
+                          },
+                          child: Container(
+                            height:
+                                MediaQuery.of(context).size.height * (50 / 800),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xff006837),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: colorF1F1F1,
+                            ),
+                          ),
+                        );
+                      })
                     ],
                   ),
                   const SizedBox(

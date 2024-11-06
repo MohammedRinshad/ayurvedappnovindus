@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,6 +21,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final int? maxLength;
   final double? width;
   final double? height;
+  final Function(String)? onChanged;
 
   const TextFormFieldWidget({
     Key? key,
@@ -41,11 +41,12 @@ class TextFormFieldWidget extends StatelessWidget {
     this.maxLength,
     this.width,
     this.height,
+    this.onChanged,
   }) : super(key: key);
 
   final OutlineInputBorder _outlineInputBorder = const OutlineInputBorder(
     borderSide: BorderSide(
-      color: Colors.black, // Set to black to always show this color
+      color: Colors.black,
     ),
   );
 
@@ -63,40 +64,41 @@ class TextFormFieldWidget extends StatelessWidget {
         obscureText: obscureText,
         obscuringCharacter: '*',
         validator: validator,
-        style: ts16mcBlack,
+        style: ts12mcBlack,
         maxLength: maxLength,
         autofocus: autofocus,
         cursorColor: color242A38,
+        onChanged: onChanged,
+        textAlign: TextAlign.left, // Center-aligns hintText and text
         decoration: InputDecoration(
-        //suffix: suffixIcon,
           hintText: hintText,
-          hintStyle: ts14mcBlack,
-
+          hintStyle: ts12mcBlack,
           labelText: labelText,
           errorText: errorText,
           errorMaxLines: 2,
           counterText: '',
           labelStyle: ts12mcBlack,
-          filled: true, 
-          fillColor: Colors.grey.shade100, 
+          filled: true,
+          fillColor: Colors.grey.shade100,
           border: _outlineInputBorder.copyWith(
             borderRadius: BorderRadius.circular(12),
           ),
           enabledBorder: _outlineInputBorder.copyWith(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color:Colors.grey), // Always black when enabled
+            borderSide: const BorderSide(color: Colors.grey),
           ),
           disabledBorder: _outlineInputBorder.copyWith(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.grey), // Always black when disabled
+            borderSide: const BorderSide(color: Colors.grey),
           ),
           focusedBorder: _outlineInputBorder.copyWith(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.grey) // Black when focused
+            borderSide: const BorderSide(color: Colors.grey),
           ),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
+          contentPadding:
+          const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         ),
       ),
     );

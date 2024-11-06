@@ -2,24 +2,35 @@ import 'package:flutter/material.dart';
 
 class CounterProvider extends ChangeNotifier {
   int _maleCount = 0;
-  int _femaleCount=0;
-  // Initialize count to 0
+  int _femaleCount = 0;
 
-  int get count => _maleCount;
-  int get fCount=>_femaleCount;// Getter for count
+  // Getters for each count
+  int get maleCount => _maleCount;
+  int get femaleCount => _femaleCount;
 
-  void increment() {
+  // Methods to increment and decrement male count
+  void incrementMale() {
     _maleCount++;
-    _femaleCount++;// Increment count
     notifyListeners(); // Notify listeners to rebuild UI
   }
 
-  void decrement() {
-    if (_maleCount > 0||_femaleCount>0) {
+  void decrementMale() {
+    if (_maleCount > 0) {
       _maleCount--;
-      _femaleCount--;// Decrement count
       notifyListeners();
     }
-    // Notify listeners to rebuild UI
+  }
+
+  // Methods to increment and decrement female count
+  void incrementFemale() {
+    _femaleCount++;
+    notifyListeners(); // Notify listeners to rebuild UI
+  }
+
+  void decrementFemale() {
+    if (_femaleCount > 0) {
+      _femaleCount--;
+      notifyListeners();
+    }
   }
 }

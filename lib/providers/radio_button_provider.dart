@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PaymentProvider with ChangeNotifier {
-  String _selectedPayment = 'Card';
+  String _selectedPayment = 'Cash';
 
   String get selectedPayment => _selectedPayment;
 

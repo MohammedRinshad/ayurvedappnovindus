@@ -12,8 +12,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize the provider to start the timer
-    //Provider.of<SplashProvider>(context, listen: false);
+
     Timer(
         const Duration(seconds: 3),
         () => Navigator.pushReplacement(
